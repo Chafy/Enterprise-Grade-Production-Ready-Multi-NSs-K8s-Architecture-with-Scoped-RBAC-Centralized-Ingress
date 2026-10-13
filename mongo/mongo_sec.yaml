@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: mongo-pass
+    namespace: mongo-ns
+type: Opaque
+data:
+    username: bW9uZ28tdXNlcg==
+    password: bW9uZ28tcGFzc3dvcmQ=

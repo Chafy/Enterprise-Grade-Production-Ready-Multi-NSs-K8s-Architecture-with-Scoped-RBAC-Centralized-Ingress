@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongoex-cm
+  namespace: mongo-ns
+data:
+  database_url: mongo_svc
