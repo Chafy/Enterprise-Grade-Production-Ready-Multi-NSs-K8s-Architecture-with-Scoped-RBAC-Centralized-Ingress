@@ -171,7 +171,7 @@ kubectl get ingress,svc -n default
 Open your browser using the `ADDRESS` shown under `kubectl get ingress -n default`:
 
 * **WordPress Frontend**: `http://<YOUR_ELB_DNS_NAME>/wordpress`
-* **Mongo Express Admin UI**: `http://<YOUR_ELB_DNS_NAME>/mongo` *(Default Basic Auth login: `admin` / `pass` unless overridden)*
+* **Mongo Express UI**: `http://<YOUR_ELB_DNS_NAME>/mongo` 
 
 ---
 
