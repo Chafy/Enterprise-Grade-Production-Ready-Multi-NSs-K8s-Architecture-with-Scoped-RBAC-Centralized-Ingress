@@ -43,6 +43,8 @@ spec:
               secretKeyRef:
                 name: mongo-pass
                 key: password
+          - name: ME_CONFIG_BASICAUTH
+            value: "false"             
           - name: ME_CONFIG_MONGODB_SERVER
             valueFrom:
               configMapKeyRef:

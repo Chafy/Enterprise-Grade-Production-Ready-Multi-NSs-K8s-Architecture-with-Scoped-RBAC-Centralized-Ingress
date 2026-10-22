@@ -1,9 +1,10 @@
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
   namespace: wordpress-ns
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: wordpress
@@ -15,8 +16,8 @@ spec:
         tier: frontend
     spec:
       affinity:
-       nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
               - key: app
@@ -29,22 +30,31 @@ spec:
         value: "wordpress"
         effect: "NoSchedule"
       containers:
-      - image: wordpress
-        name: wordpress
+      - name: wordpress
+        image: wordpress:latest
+        ports:
+        - containerPort: 80
+          name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
           valueFrom:
-              configMapKeyRef:
-                name: wordpress-cm
-                key: database_url
+            configMapKeyRef:
+              name: wordpress-cm
+              key: database_url
+        - name: WORDPRESS_DB_NAME
+          value: "wordpress"
+        - name: WORDPRESS_DB_USER
+          value: "wp-user"
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-pass
               key: password
-        ports:
-        - containerPort: 80
-          name: wordpress
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
         volumeMounts:
         - name: wordpress-storage
           mountPath: /var/www/html

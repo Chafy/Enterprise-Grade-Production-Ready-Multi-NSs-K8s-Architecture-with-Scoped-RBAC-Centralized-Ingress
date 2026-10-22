@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8s-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location = /healthz {
+        access_log off;
+        return 200 "healthy\n";
+        add_header Content-Type text/plain;
+      }
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /healthz
+        pathType: Prefix
+        backend:
+          service:
+            name: wordpress-external-svc
+            port:
+              number: 80
+  - host: k8s-132240814.us-east-1.elb.amazonaws.com
+    http:
+      paths:
+      - path: /mongo
+        pathType: Prefix
+        backend:
+          service:
+            name: mongoex-external-svc
+            port:
+              number: 8081
+      - path: /wordpress
+        pathType: Prefix
+        backend:
+          service:
+            name: wordpress-external-svc
+            port:
+              number: 80

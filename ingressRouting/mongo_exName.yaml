@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-external-svc
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: mongoex-svc.mongo-ns.svc.cluster.local
+  ports:
+    - port: 80
+      targetPort: 80

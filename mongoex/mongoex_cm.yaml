@@ -4,4 +4,4 @@ metadata:
   name: mongoex-cm
   namespace: mongo-ns
 data:
-  database_url: mongo_svc
+  database_url: mongo-svc
