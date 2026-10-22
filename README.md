@@ -55,36 +55,37 @@ Modern NGINX Ingress Controller releases disable `nginx.ingress.kubernetes.io/se
 ```text
 Project/
 ├── ingressRouting/
-│   ├── ingress.yaml                  # Dedicated wordpress-ingress (rewrite) & mongo-ingress (prefix)
-│   ├── mongo_exName.yaml             # ExternalName Service -> mongoex-svc.mongo-ns.svc.cluster.local
-│   └── wordpress_exName.yaml         # ExternalName Service -> wordpress-svc.wordpress-ns.svc.cluster.local
+│   ├── ingress.yaml              # Dedicated wordpress-ingress (rewrite) & mongo-ingress (prefix)
+│   ├── mongo_exName.yaml         # ExternalName Service -> mongoex-svc.mongo-ns.svc.cluster.local
+│   └── wordpress_exName.yaml     # ExternalName Service -> wordpress-svc.wordpress-ns.svc.cluster.local
 ├── mongo/
-│   ├── mongo_deploy.yaml             # MongoDB 7.0 Deployment (Recreate strategy + Node Affinity/Toleration)
-│   ├── mongo_pvc.yaml                # 5Gi ReadWriteOnce PVC bound to mongo-sc
-│   ├── mongo_sc.yaml                 # AWS EBS CSI StorageClass (WaitForFirstConsumer, Retain)
-│   ├── mongo_sec.yaml                # Opaque Secret for MongoDB root credentials
-│   └── mongo_svc.yaml                # ClusterIP Service (:27017)
+│   ├── mongo_deploy.yaml         # MongoDB 7.0 Deployment (Recreate strategy + Node Affinity/Toleration)
+│   ├── mongo_pvc.yaml            # 5Gi ReadWriteOnce PVC bound to mongo-sc
+│   ├── mongo_sc.yaml             # AWS EBS CSI StorageClass (WaitForFirstConsumer, Retain)
+│   ├── mongo_sec.yaml            # Opaque Secret for MongoDB root credentials
+│   └── mongo_svc.yaml            # ClusterIP Service (:27017)
 ├── mongoex/
-│   ├── mongoex_cm.yaml               # ConfigMap pointing to mongo-svc
-│   ├── mongoex_deploy.yaml           # Mongo Express 1.0.2 Deployment (ME_CONFIG_SITE_BASEURL=/mongo/)
-│   └── mongoex_svc.yaml              # ClusterIP Service (:8081)
+│   ├── mongoex_cm.yaml           # ConfigMap pointing to mongo-svc
+│   ├── mongoex_deploy.yaml       # Mongo Express 1.0.2 Deployment (ME_CONFIG_SITE_BASEURL=/mongo/)
+│   └── mongoex_svc.yaml          # ClusterIP Service (:8081)
 ├── mysql/
-│   ├── mysql_deploy.yaml             # MySQL 8.0 Deployment (Recreate strategy + Node Affinity/Toleration)
-│   ├── mysql_pvc.yaml                # 5Gi ReadWriteOnce PVC bound to mysql-sc
-│   ├── mysql_sc.yaml                 # AWS EBS CSI StorageClass (WaitForFirstConsumer, Retain)
-│   ├── mysql_sec.yaml                # Opaque Secret for MySQL password
-│   └── mysql_svc.yaml                # ClusterIP Service (:3306)
+│   ├── mysql_deploy.yaml         # MySQL 8.0 Deployment (Recreate strategy + Node Affinity/Toleration)
+│   ├── mysql_pvc.yaml            # 5Gi ReadWriteOnce PVC bound to mysql-sc
+│   ├── mysql_sc.yaml             # AWS EBS CSI StorageClass (WaitForFirstConsumer, Retain)
+│   ├── mysql_sec.yaml            # Opaque Secret for MySQL password
+│   └── mysql_svc.yaml            # ClusterIP Service (:3306)
 ├── wordpress/
-│   ├── wordpress_cm.yaml             # ConfigMap pointing to mysql-svc
-│   ├── wordpress_deploy.yaml         # WordPress 6.6-Apache Deployment + dynamic WP_HOME/WP_SITEURL
-│   ├── wordpress_pv.yaml             # Static 5Gi ReadWriteMany PV backed by AWS EFS Access Point
-│   ├── wordpress_pvc.yaml            # 5Gi ReadWriteMany PVC bound to efs-sc
-│   ├── wordpress_sc.yaml             # AWS EFS CSI StorageClass (efs.csi.aws.com)
-│   └── wordpress_svc.yaml            # ClusterIP Service (:80)
-├── all.yaml                          # Unified single-file manifest for 1-command deployment
-├── context-admin.sh                  # Automated X.509 user cert, CSR, RBAC & kubeconfig generator
-└── cleanup.sh                        # Automated teardown script for workloads, PVCs, PVs & namespaces
-
+│   ├── wordpress_cm.yaml         # ConfigMap pointing to mysql-svc
+│   ├── wordpress_deploy.yaml     # WordPress 6.6-Apache Deployment + dynamic WP_HOME/WP_SITEURL
+│   ├── wordpress_pv.yaml         # Static 5Gi ReadWriteMany PV backed by AWS EFS Access Point
+│   ├── wordpress_pvc.yaml        # 5Gi ReadWriteMany PVC bound to efs-sc
+│   ├── wordpress_sc.yaml         # AWS EFS CSI StorageClass (efs.csi.aws.com)
+│   └── wordpress_svc.yaml        # ClusterIP Service (:80)
+├── all.yaml                      # Unified single-file manifest for 1-command deployment
+├── context-admin.sh              # Automated X.509 user cert, CSR, RBAC & kubeconfig generator
+├── cleanup.sh                    # Automated teardown script for workloads, PVCs, PVs & namespaces
+├── QuickTest.mp4                 # Short demo video (apply + test + cleanup)
+└── test-context.png              # Screenshot proving restricted user RBAC (Forbidden on kube-system)
 ```
 
 ---
