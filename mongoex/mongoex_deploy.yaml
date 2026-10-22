@@ -29,7 +29,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: mongo-express
-        image: mongo-express
+        image: mongo-express:1.0.2
         ports:
           - containerPort: 8081
         env:
@@ -50,3 +50,5 @@ spec:
               configMapKeyRef:
                 name: mongoex-cm
                 key: database_url
+          - name: ME_CONFIG_SITE_BASEURL
+            value: "/mongo/"

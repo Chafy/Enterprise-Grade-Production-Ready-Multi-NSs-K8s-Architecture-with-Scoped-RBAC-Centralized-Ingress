@@ -6,11 +6,9 @@ if ! kubectl cluster-info &> /dev/null; then
     exit 1
 fi
 
-echo "=== 1. Deleting Ingress Resources ==="
-if [ -f "ingress.yaml" ]; then
-    kubectl delete -f ingress.yaml --ignore-not-found=true
-else
-    echo "Warning: ingress.yaml not found, skipping..."
+echo "=== 1. Deleting Ingress & ExternalName Resources ==="
+if [ -d "ingressRouting" ]; then
+    kubectl delete -f ingressRouting/ --ignore-not-found=true
 fi
 
 echo "=== 2. Deleting Workloads via Manifests Directories ==="

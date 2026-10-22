@@ -4,6 +4,9 @@ metadata:
   name: mysql-app
   namespace: wordpress-ns
 spec:
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: wordpress
@@ -29,7 +32,7 @@ spec:
         value: "wordpress"
         effect: "NoSchedule"
       containers:
-      - image: mysql
+      - image: mysql:8.0
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD

@@ -31,7 +31,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: wordpress
-        image: wordpress:latest
+        image: wordpress:6.6-apache
         ports:
         - containerPort: 80
           name: wordpress
@@ -50,11 +50,15 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-pass
-              key: password
+        # - name: MYSQL_ROOT_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mysql-pass
+        #       key: password
+        - name: WORDPRESS_CONFIG_EXTRA
+          value: |
+            define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST'] . '/wordpress');
+            define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/wordpress');
         volumeMounts:
         - name: wordpress-storage
           mountPath: /var/www/html

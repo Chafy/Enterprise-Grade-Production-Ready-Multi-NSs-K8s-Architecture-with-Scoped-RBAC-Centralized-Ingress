@@ -63,6 +63,7 @@ openssl req -new -key ${USERNAME}.key -out ${USERNAME}.csr -subj "/CN=${USERNAME
 CSR_BASE64=$(cat ${USERNAME}.csr | base64 | tr -d '\n')
 
 echo "=== 2. Submitting CertificateSigningRequest to Kubernetes ==="
+kubectl delete csr ${USERNAME}-csr --ignore-not-found=true
 cat <<EOF | kubectl apply -f -
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest

@@ -1,30 +1,79 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: k8s-ingress
+#   namespace: default
+#   annotations:
+#     nginx.ingress.kubernetes.io/use-regex: "true"
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+#     nginx.ingress.kubernetes.io/server-snippet: |
+#       location = /healthz {
+#         access_log off;
+#         return 200 "healthy\n";
+#         add_header Content-Type text/plain;
+#       }
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#   - http:
+#       paths:
+#       - path: /healthz
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: wordpress-external-svc
+#             port:
+#               number: 80
+#   - host: k8s-132240814.us-east-1.elb.amazonaws.com
+#     http:
+#       paths:
+#       - path: /mongo(/|$)(.*)
+#         pathType: ImplementationSpecific
+#         backend:
+#           service:
+#             name: mongoex-external-svc
+#             port:
+#               number: 8081
+#       - path: /wordpress(/|$)(.*)
+#         pathType: ImplementationSpecific
+#         backend:
+#           service:
+#             name: wordpress-external-svc
+#             port:
+#               number: 80
+
+---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: k8s-ingress
+  name: wordpress-ingress
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/server-snippet: |
-      location = /healthz {
-        access_log off;
-        return 200 "healthy\n";
-        add_header Content-Type text/plain;
-      }
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /healthz
-        pathType: Prefix
+      - path: /wordpress(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: wordpress-external-svc
             port:
               number: 80
-  - host: k8s-132240814.us-east-1.elb.amazonaws.com
-    http:
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
       paths:
       - path: /mongo
         pathType: Prefix
@@ -33,10 +82,3 @@ spec:
             name: mongoex-external-svc
             port:
               number: 8081
-      - path: /wordpress
-        pathType: Prefix
-        backend:
-          service:
-            name: wordpress-external-svc
-            port:
-              number: 80
