@@ -1,7 +1,10 @@
 
 
 # Multi-Tenant AWS EKS Architecture: WordPress & MongoDB Stacks with Namespace RBAC, Hybrid EFS/EBS CSI Storage & Cross-Namespace Ingress
----
+
+<p align="center">
+  <img src="./architecture-diagram.jpg" alt="AWS Dual-Project Kubernetes Cluster Architecture" width="100%">
+</p>
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
